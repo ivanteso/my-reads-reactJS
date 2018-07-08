@@ -4,6 +4,8 @@ import React from 'react';
 //import escapeRegExp from 'escape-string-regexp';
 //import sortBy from 'sort-by';
 
+// Since Booklist render only book elements, I've decided to use a functional
+// component instead of a normal component
 function BooksList(props) {
 
     return (
