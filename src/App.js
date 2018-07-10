@@ -14,6 +14,7 @@ class BooksApp extends React.Component {
      read: [],
      allBooks: [],
 
+     // States used by search component
      query: '',
      searchResult: [],
      bookNotFound: []
@@ -42,21 +43,25 @@ class BooksApp extends React.Component {
       })
       // set the arrays as new state
       this.setState({ currentlyReading, wannaRead, read, allBooks })
+      // catch the error if BooksAPI fail to fetch books
     }).catch(err => {
       console.error('Warning, an error occurred trying to fetch books from BooksAPI', err);
     })
   }
 
+  // Call function after component did mount
   componentDidMount() {
     this.getAllBooks()
   }
 
+  // Update backend via API and then refresh the shelves via getAllBooks
   changeShelf = (book, updatedShelf) => {
     BooksAPI.update(book, updatedShelf)
     this.getAllBooks()
   }
 
   searchQuery = (query) => {
+    // Empty book provided if the search doesn't match any book on database
     const emptyBook = {
       id: 0,
       imageLinks: {
@@ -66,15 +71,14 @@ class BooksApp extends React.Component {
     }
 
     this.setState({ query })
-    // if the query is empty, setState di empty array and exit the funcition
-
+    // if the query is empty, setState di empty array and exit the function
     if (query.length === 0) {
       this.setState({ query, searchResult: [], bookNotFound: [] })
       return
     } else {
       BooksAPI.search(query.trim())
       .then(resp => {
-        // If the response has some elements, start the function
+        // If the response is not empty, start the function
         if (resp.error !== 'empty query') {
           // loop over the response and add a 'no cover' thumbnail image
           // to avoid errors trying to render it later
@@ -83,26 +87,31 @@ class BooksApp extends React.Component {
               queryBook.imageLinks = {};
               queryBook.imageLinks.thumbnail = 'https://inc.mizanstore.com/aassets/img/com_cart/produk/no_cover.jpg';
             }
+            // Like before, add an author in case the field is empty
             if (queryBook.authors === undefined) {
               queryBook.authors = ['Various authors'];
             }
           })
+          // Compare the search result array with allBooks array and if two books
+          // match each other, set the proper shelf into the response array
           resp = resp.map(searchedBook => {
             for (const book of this.state.allBooks) {
               if (searchedBook.id === book.id) {
                 searchedBook.shelf = book.shelf
                 break;
               } else {
+                // if doesn't match any book, set shelf as 'none'
                 searchedBook.shelf = 'none'
               }
             }
             return searchedBook
           })
+          // set the searchResult state as the response array, so SearchBook can
+          // render the elements on the page
           this.setState({ searchResult: resp})
         } else {
           // if the search result is empty, push emptyBook in bookNotFound
           // and setState + render
-
             this.setState({ bookNotFound: [emptyBook], searchResult: [] })
         }
       })

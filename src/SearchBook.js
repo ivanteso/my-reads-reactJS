@@ -48,6 +48,9 @@ function SearchBook(props) {
               </div>
             </li>
           ))}
+          // this list element is rendered only if nothing return from the research
+          // and load the empty book created at the beginning of searchQuery()
+          // in App.js
           {props.emptyList.map((book) => (
             <li key={book.id}>
               <div className="book">

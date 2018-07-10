@@ -26,6 +26,8 @@ function BooksList(props) {
                       defaultValue={book.shelf}
                       onChange={(event) => {
                         props.onShelfSelector(book, event.target.value)
+                        // add a class if shelf is 'none' that set the book's cover opacity
+                        // at 0.3 in App.css
                         if (event.target.value === 'none') {
                           event.target.parentElement.previousElementSibling.classList.add('none');
                         }
