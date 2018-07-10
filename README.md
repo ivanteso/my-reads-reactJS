@@ -1,92 +1,51 @@
-# MyReads Project
+# MyReads: A Book Tracking App, a Udacity's project
 
-This is the starter template for the final assessment project for Udacity's React Fundamentals course. The goal of this template is to save you time by providing a static example of the CSS and HTML markup that may be used, but without any of the React code that is needed to complete the project. If you choose to start with this template, your job will be to add interactivity to the app by refactoring the static code in this template.
+This project is part of the __Frontend Web Developer Nanodegree (full Google scholarship)__. This project's purose is to build a book tracking application using ReactJS, focusing on components, props and state.
 
-Of course, you are free to start this project from scratch if you wish! Just be sure to use [Create React App](https://github.com/facebookincubator/create-react-app) to bootstrap the project.
+## Table of Contents
 
-## TL;DR
+* [Instructions](#instructions)
+* [Installation](#installation)
+* [Live Version](#live)
+* [Functionality](#functionality)
+* [Requirements](#requirements)
+* [Dependencies](#dependencies)
+* [Contributing](#contributing)
 
-To get started developing right away:
+## Instructions
 
-* install all project dependencies with `npm install`
-* start the development server with `npm start`
+A starter code containing the app main style, the Udacity's BooksAPI and a list of some keywords have been provided. The requirement for pass the project was to show the books in three different shelves, to delete eventually a book selecting 'none' and to search into a book database via BooksAPI.
 
-## What You're Getting
-```bash
-├── CONTRIBUTING.md
-├── README.md - This file.
-├── SEARCH_TERMS.md # The whitelisted short collection of available search terms for you to use with your app.
-├── package.json # npm package manager file. It's unlikely that you'll need to modify this.
-├── public
-│   ├── favicon.ico # React Icon, You may change if you wish.
-│   └── index.html # DO NOT MODIFY
-└── src
-    ├── App.css # Styles for your app. Feel free to customize this as you desire.
-    ├── App.js # This is the root of your app. Contains static HTML right now.
-    ├── App.test.js # Used for testing. Provided with Create React App. Testing is encouraged, but not required.
-    ├── BooksAPI.js # A JavaScript API for the provided Udacity backend. Instructions for the methods are below.
-    ├── icons # Helpful images for your app. Use at your discretion.
-    │   ├── add.svg
-    │   ├── arrow-back.svg
-    │   └── arrow-drop-down.svg
-    ├── index.css # Global styles. You probably won't need to change anything here.
-    └── index.js # You should not need to modify this file. It is used for DOM rendering only.
-```
-
-Remember that good React design practice is to create new JS files for each component and use import/require statements to include them where they are needed.
-
-## Backend Server
-
-To simplify your development process, we've provided a backend server for you to develop against. The provided file [`BooksAPI.js`](src/BooksAPI.js) contains the methods you will need to perform necessary operations on the backend:
-
-* [`getAll`](#getall)
-* [`update`](#update)
-* [`search`](#search)
-
-### `getAll`
-
-Method Signature:
-
-```js
-getAll()
-```
-
-* Returns a Promise which resolves to a JSON object containing a collection of book objects.
-* This collection represents the books currently in the bookshelves in your app.
-
-### `update`
-
-Method Signature:
-
-```js
-update(book, shelf)
-```
-
-* book: `<Object>` containing at minimum an `id` attribute
-* shelf: `<String>` contains one of ["wantToRead", "currentlyReading", "read"]  
-* Returns a Promise which resolves to a JSON object containing the response data of the POST request
-
-### `search`
-
-Method Signature:
-
-```js
-search(query)
-```
-
-* query: `<String>`
-* Returns a Promise which resolves to a JSON object containing a collection of a maximum of 20 book objects.
-* These books do not know which shelf they are on. They are raw results only. You'll need to make sure that books have the correct state while on the search page.
-
-## Important
-The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can be found in [SEARCH_TERMS.md](SEARCH_TERMS.md). That list of terms are the _only_ terms that will work with the backend, so don't be surprised if your searches for Basket Weaving or Bubble Wrap don't come back with any results.
-
-## Create React App
+__IMPORTANT:__ The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can be found in [SEARCH_TERMS.md](SEARCH_TERMS.md). That list of terms are the _only_ terms that will work with the backend, so don't be surprised if your searches for Basket Weaving or Bubble Wrap don't come back with any results.
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). You can find more information on how to perform common tasks [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
+## Installation
+
+You can clone this repository or download it as a .zip file.
+Once downloaded, you need to run `npm install` and then `npm start` in your console.
+
+## Live Version
+
+You can find a live version of the project [here!](https://ivanteso.github.io/my-reads-reactJS/). Enjoy
+
+## Requirements
+
+You can find the full list ofthe reuirement visiting [Udacity's Project Rubric Link](https://review.udacity.com/#!/rubrics/918/view).
+
+## Dependencies
+
+The project is created starting from the original [Udacity's Project](https://github.com/udacity/reactnd-project-myreads-starter).
+
+I've used the following resources in order to complete the project:
+
+__JavaScript Library__
+- [ReactJS](https://reactjs.org/). The whole project is based on React
+- [React Router](https://www.npmjs.com/package/react-router). A third party router for React
+- [Sort By](https://www.npmjs.com/package/sort-by). A useful plugin to sort results from array
+- [Prop Types](https://www.npmjs.com/package/prop-types). Runtime type checking for React props and similar objects.
+- [Debounce Input](https://www.npmjs.com/package/react-debounce-input). Add a delay to the input field, useful to avoid to request multiple time to the server every type.
+
 ## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+All suggestions and tips will be more than appreciated but, as general rule, no pull requested are normally accepted.
