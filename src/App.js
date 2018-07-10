@@ -42,6 +42,8 @@ class BooksApp extends React.Component {
       })
       // set the arrays as new state
       this.setState({ currentlyReading, wannaRead, read, allBooks })
+    }).catch(err => {
+      console.error('Warning, an error occurred trying to fetch books from BooksAPI', err);
     })
   }
 
@@ -51,7 +53,6 @@ class BooksApp extends React.Component {
 
   changeShelf = (book, updatedShelf) => {
     BooksAPI.update(book, updatedShelf)
-
     this.getAllBooks()
   }
 
