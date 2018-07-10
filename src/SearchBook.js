@@ -32,7 +32,9 @@ function SearchBook(props) {
                 <div className="book-top">
                   <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})`, backgroundSize: '100% 100%' }}></div>
                   <div className="book-shelf-changer">
-                    <select>
+                    <select
+                      defaultValue={book.shelf}
+                      onChange={(event) => props.onShelfSelector(book, event.target.value)}>
                       <option value="move" disabled>Move to...</option>
                       <option value="currentlyReading">Currently Reading</option>
                       <option value="wantToRead">Want to Read</option>
@@ -43,6 +45,16 @@ function SearchBook(props) {
                 </div>
                 <div className="book-title">{book.title}</div>
                 <div className="book-authors">{book.authors}</div>
+              </div>
+            </li>
+          ))}
+          {props.emptyList.map((book) => (
+            <li key={book.id}>
+              <div className="book">
+                <div className="book-top">
+                  <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})`, backgroundSize: '100% 100%' }}></div>
+                </div>
+                <div className="book-title">{book.title}</div>
               </div>
             </li>
           ))}

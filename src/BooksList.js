@@ -22,12 +22,19 @@ function BooksList(props) {
                 <div className="book-top">
                   <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})`, backgroundSize: '100% 100%' }}></div>
                   <div className="book-shelf-changer">
-                    <select>
-                      <option value="move" disabled>Move to...</option>
-                      <option value="currentlyReading">Currently Reading</option>
-                      <option value="wantToRead">Want to Read</option>
-                      <option value="read">Read</option>
-                      <option value="none">None</option>
+                    <select
+                      defaultValue={book.shelf}
+                      onChange={(event) => {
+                        props.onShelfSelector(book, event.target.value)
+                        if (event.target.value === 'none') {
+                          event.target.parentElement.previousElementSibling.classList.add('none');
+                        }
+                      }}>
+                          <option value="move" disabled>Move to...</option>
+                          <option value="currentlyReading">Currently Reading</option>
+                          <option value="wantToRead">Want to Read</option>
+                          <option value="read">Read</option>
+                          <option value="none">None</option>
                     </select>
                   </div>
                 </div>

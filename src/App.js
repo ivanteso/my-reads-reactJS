@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link, Route } from 'react-router-dom'
-import escapeRegExp from 'escape-string-regexp';
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import SearchBook from './SearchBook'
 import BooksList from './BooksList'
 
 class BooksApp extends React.Component {
+
   state = {
      // States used by BooksList
      currentlyReading: [],
@@ -15,10 +15,11 @@ class BooksApp extends React.Component {
      allBooks: [],
 
      query: '',
-     searchResult: []
+     searchResult: [],
+     bookNotFound: []
   }
 
-  componentDidMount() {
+  getAllBooks() {
     // Empty arrays to fill after getAll is called from BooksAPI
     const currentlyReading = [];
     const wannaRead = [];
@@ -30,10 +31,6 @@ class BooksApp extends React.Component {
       // Loop over all books and push them into the right array
       // depending on their .shelf value
       books.forEach(book => {
-        if (book.imageLinks === undefined) {
-          book.imageLinks = {};
-          book.imageLinks.thumbnail = 'https://inc.mizanstore.com/aassets/img/com_cart/produk/no_cover.jpg';
-        }
         if (book.shelf === 'currentlyReading') {
           currentlyReading.push(book);
         } else if (book.shelf === 'wantToRead') {
@@ -48,26 +45,65 @@ class BooksApp extends React.Component {
     })
   }
 
+  componentDidMount() {
+    this.getAllBooks()
+  }
+
+  changeShelf = (book, updatedShelf) => {
+    BooksAPI.update(book, updatedShelf)
+
+    this.getAllBooks()
+  }
+
   searchQuery = (query) => {
-    const searchResult = []
+    const emptyBook = {
+      id: 0,
+      imageLinks: {
+        thumbnail: 'https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/256x256/magnifying_glass.png'
+      },
+      title: 'Book not found!'
+    }
+
     this.setState({ query })
+    // if the query is empty, setState di empty array and exit the funcition
+
     if (query.length === 0) {
-      this.setState({ query, searchResult })
+      this.setState({ query, searchResult: [], bookNotFound: [] })
       return
     } else {
-      BooksAPI.search(query.trim()).then(resp => {
+      BooksAPI.search(query.trim())
+      .then(resp => {
+        // If the response has some elements, start the function
         if (resp.error !== 'empty query') {
-          resp.forEach(matchBook => {
-            if (matchBook.imageLinks === undefined) {
-              matchBook.imageLinks = {};
-              matchBook.imageLinks.thumbnail = 'https://inc.mizanstore.com/aassets/img/com_cart/produk/no_cover.jpg';
+          // loop over the response and add a 'no cover' thumbnail image
+          // to avoid errors trying to render it later
+          resp.forEach(queryBook => {
+            if (queryBook.imageLinks === undefined) {
+              queryBook.imageLinks = {};
+              queryBook.imageLinks.thumbnail = 'https://inc.mizanstore.com/aassets/img/com_cart/produk/no_cover.jpg';
             }
-            searchResult.push(matchBook);
+            if (queryBook.authors === undefined) {
+              queryBook.authors = ['Various authors'];
+            }
           })
+          resp = resp.map(searchedBook => {
+            for (const book of this.state.allBooks) {
+              if (searchedBook.id === book.id) {
+                searchedBook.shelf = book.shelf
+                break;
+              } else {
+                searchedBook.shelf = 'none'
+              }
+            }
+            return searchedBook
+          })
+          this.setState({ searchResult: resp})
         } else {
-            console.log('No book found!')
+          // if the search result is empty, push emptyBook in bookNotFound
+          // and setState + render
+
+            this.setState({ bookNotFound: [emptyBook], searchResult: [] })
         }
-        this.setState({ searchResult })
       })
     }
 	}
@@ -87,13 +123,19 @@ class BooksApp extends React.Component {
               <div>
                 <BooksList
                   shelf={this.state.currentlyReading}
-                  shelfName='Currently Reading'/>
+                  shelfName='Currently Reading'
+                  onShelfSelector={this.changeShelf}
+                  />
                 <BooksList
                   shelf={this.state.wannaRead}
-                  shelfName='Want To Read'/>
+                  shelfName='Want To Read'
+                  onShelfSelector={this.changeShelf}
+                  />
                 <BooksList
                   shelf={this.state.read}
-                  shelfName='read'/>
+                  shelfName='Read'
+                  onShelfSelector={this.changeShelf}
+                  />
               </div>
             </div>
           )} />
@@ -106,8 +148,10 @@ class BooksApp extends React.Component {
         <Route exact path='/search' render={() => (
           <SearchBook
             bookFoundList={this.state.searchResult}
+            emptyList={this.state.bookNotFound}
             onQuery={this.state.query}
             onSearch={this.searchQuery}
+            onShelfSelector={this.changeShelf}
             />
         )} />
 
