@@ -1,7 +1,5 @@
 import React from 'react';
-//import { Link } from 'react-router-dom'
-//import PropTypes from 'prop-types';
-//import escapeRegExp from 'escape-string-regexp';
+import PropTypes from 'prop-types';
 import sortBy from 'sort-by';
 
 // Since Booklist render only book elements, I've decided to use a functional
@@ -50,6 +48,12 @@ function BooksList(props) {
       </div>
     </div>
   )
+}
+
+BooksList.propTypes = {
+  shelfName: PropTypes.string.isRequired,
+  shelf: PropTypes.array.isRequired,
+  onShelfSelector: PropTypes.func.isRequired
 }
 
 export default BooksList

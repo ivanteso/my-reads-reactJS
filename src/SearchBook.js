@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import sortBy from 'sort-by';
 import {DebounceInput} from 'react-debounce-input';
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 function SearchBook(props) {
 
@@ -48,10 +48,11 @@ function SearchBook(props) {
               </div>
             </li>
           ))}
-          // this list element is rendered only if nothing return from the research
+
+          {// this list element is rendered only if nothing return from the research
           // and load the empty book created at the beginning of searchQuery()
           // in App.js
-          {props.emptyList.map((book) => (
+            props.emptyList.map((book) => (
             <li key={book.id}>
               <div className="book">
                 <div className="book-top">
@@ -65,6 +66,13 @@ function SearchBook(props) {
       </div>
     </div>
   )
+}
+
+SearchBook.propTypes = {
+  bookFoundList: PropTypes.array.isRequired,
+  onQuery: PropTypes.string.isRequired,
+  onSearch: PropTypes.func.isRequired,
+  onShelfSelector: PropTypes.func.isRequired
 }
 
 export default SearchBook
