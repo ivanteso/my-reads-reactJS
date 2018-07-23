@@ -1,6 +1,8 @@
 {
+  "homepage": "http://ivanteso.github.io/my-reads-reactJS/",
   "dependencies": {
     "escape-string-regexp": "^1.0.5",
+    "gh-pages": "^1.2.0",
     "prop-types": "^15.6.2",
     "react": "^16.3.2",
     "react-debounce-input": "^3.2.0",
@@ -15,6 +17,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   }
 }
