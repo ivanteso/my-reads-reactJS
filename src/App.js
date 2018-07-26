@@ -128,7 +128,7 @@ class BooksApp extends React.Component {
             <h1>MyReads</h1>
           </div>
 
-          <Route exact path={process.env.PUBLIC_URL + '/my-reads-reactJS/'} render={() => (
+          <Route exact path={process.env.PUBLIC_URL} render={() => (
             <div className="list-books-content">
               <div>
                 <BooksList
