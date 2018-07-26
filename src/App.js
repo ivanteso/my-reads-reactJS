@@ -128,7 +128,7 @@ class BooksApp extends React.Component {
             <h1>MyReads</h1>
           </div>
 
-          <Route exact path='/' render={() => (
+          <Route exact path='/my-reads-reactJS/' render={() => (
             <div className="list-books-content">
               <div>
                 <BooksList

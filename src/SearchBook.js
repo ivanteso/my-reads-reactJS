@@ -11,7 +11,7 @@ function SearchBook(props) {
   return (
     <div className="search-books">
       <div className="search-books-bar">
-        <Link className="close-search" to='/'>Close</Link>
+        <Link className="close-search" to='/my-reads-reactJS/'>Close</Link>
         <div className="search-books-input-wrapper">
 
           <DebounceInput
