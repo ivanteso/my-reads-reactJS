@@ -155,7 +155,7 @@ class BooksApp extends React.Component {
           </div>
         </div>
 
-        <Route exact path={process.env.PUBLIC_URL + '/search'} render={() => (
+        <Route exact path={'/search'} render={() => (
           <SearchBook
             bookFoundList={this.state.searchResult}
             emptyList={this.state.bookNotFound}
